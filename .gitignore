@@ -1,6 +1,6 @@
 src/main/resources/application.properties
 
-HELP.md
+README.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
