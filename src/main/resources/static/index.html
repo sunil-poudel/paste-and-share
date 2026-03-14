@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Paste and Share</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Paste and Share</h1>
+
+<textarea id="content" placeholder="Paste your text here..."></textarea>
+
+<br>
+
+<button onclick="createPaste()">Create Paste</button>
+
+<div id="result"></div>
+
+<script>
+
+    async function createPaste() {
+
+        const content = document.getElementById("content").value;
+
+        const response = await fetch("/api/pastes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                content: content
+            })
+        });
+
+        const data = await response.json();
+
+        const link = window.location.origin + "/view.html?code=" + data.code;
+
+        document.getElementById("result").innerHTML =
+            "Paste created:<br>" +
+            "<a href='" + link + "' target='_blank'>" + link + "</a>";
+    }
+
+</script>
+
+</body>
+</html>
